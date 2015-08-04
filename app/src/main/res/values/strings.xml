@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Google Image Searcher</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hint_enter_image_search">Enter image search</string>
+    <string name="search">Search</string>
+
+    <string name="error_unavailable_network">network is unavailable</string>
+    <string name="error_server_side">server side has something wrong</string>
+
+    <string name="title_activity_advanced_search">AdvancedSearchActivity</string>
+    <string name="title_advanced_search">Advanced search options</string>
+    <string name="title_image_size">Image Size</string>
+    <string name="title_color_filter">Color Filter</string>
+    <string name="title_image_type">Image Type</string>
+    <string name="title_site_filter">Site Filter</string>
+
+    <string name="save">Save</string>
+</resources>
