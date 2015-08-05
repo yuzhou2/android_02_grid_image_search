@@ -107,8 +107,9 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    public void onClickButtonSearch(View view)
+    public void onClickSearchButton(View view)
     {
+        adapter.clear();
         EditText editText = (EditText) findViewById(R.id.etSearch);
         String query = editText.getText().toString();
         if (!query.isEmpty()) {
