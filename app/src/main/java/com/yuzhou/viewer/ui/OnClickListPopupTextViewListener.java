@@ -1,13 +1,10 @@
 package com.yuzhou.viewer.ui;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListPopupWindow;
-
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;

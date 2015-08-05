@@ -1,8 +1,9 @@
 package com.yuzhou.viewer.service;
 
-import com.loopj.android.http.RequestParams;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
+import com.loopj.android.http.RequestParams;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,11 +15,25 @@ import lombok.ToString;
  */
 @EqualsAndHashCode
 @ToString
-public class GoogleImageSearchTaskParams implements TaskParams, Serializable
+public class GoogleImageSearchTaskParams implements TaskParams, Parcelable
 {
-    @Getter private final String url = "https://ajax.googleapis.com/ajax/services/search/images";
 
-    private String version = "1.0";
+    public static final Parcelable.Creator CREATOR = new Creator()
+    {
+        public GoogleImageSearchTaskParams createFromParcel(Parcel in)
+        {
+            return new GoogleImageSearchTaskParams(in);
+        }
+
+        @Override
+        public Object[] newArray(int size)
+        {
+            return new GoogleImageSearchTaskParams[size];
+        }
+    };
+
+    @Getter private final String url = "https://ajax.googleapis.com/ajax/services/search/images";
+    @Getter private final String version = "1.0";
 
     @Getter @Setter private int quantity = 8;
     @Getter @Setter private String query;
@@ -26,6 +41,37 @@ public class GoogleImageSearchTaskParams implements TaskParams, Serializable
     @Getter @Setter private String imgColor;
     @Getter @Setter private String imgType;
     @Getter @Setter private String siteFilter;
+
+    public GoogleImageSearchTaskParams()
+    {
+    }
+
+    private GoogleImageSearchTaskParams(Parcel in)
+    {
+        quantity = in.readInt();
+        query = in.readString();
+        imgSize = in.readString();
+        imgColor = in.readString();
+        imgType = in.readString();
+        siteFilter = in.readString();
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeInt(quantity);
+        dest.writeString(query);
+        dest.writeString(imgSize);
+        dest.writeString(imgColor);
+        dest.writeString(imgType);
+        dest.writeString(siteFilter);
+    }
 
     @Override
     public RequestParams getParams()

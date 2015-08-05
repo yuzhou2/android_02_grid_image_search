@@ -16,4 +16,7 @@
     <string name="title_site_filter">Site Filter</string>
 
     <string name="save">Save</string>
+    <string name="title_activity_full_image">FullImageActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

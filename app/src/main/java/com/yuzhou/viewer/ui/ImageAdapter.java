@@ -1,6 +1,7 @@
 package com.yuzhou.viewer.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 public class ImageAdapter extends ArrayAdapter<GoogleImage>
 {
+
     public ImageAdapter(Context context, List<GoogleImage> images)
     {
         super(context, R.layout.item_image, images);
@@ -38,9 +40,21 @@ public class ImageAdapter extends ArrayAdapter<GoogleImage>
             convertView.setTag(holder);
         }
 
-        GoogleImage image = getItem(position);
+        final GoogleImage image = getItem(position);
         Picasso.with(getContext()).load(image.getTbUrl()).resize(image.getTbWidth(), image.getTbHeight()).into(holder.image);
         holder.title.setText(image.getTitleNoFormatting());
+
+        convertView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), FullImageActivity.class);
+                intent.putExtra("image", image);
+                getContext().startActivity(intent);
+            }
+        });
 
         return convertView;
     }
@@ -50,4 +64,5 @@ public class ImageAdapter extends ArrayAdapter<GoogleImage>
         private ImageView image;
         private TextView title;
     }
+
 }

@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        eventBus = new EventBus();
+        eventBus.register(this);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setLogo(R.drawable.ic_laucher);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-
-        eventBus = new EventBus();
-        eventBus.register(this);
 
         adapter = new ImageAdapter(this, new ArrayList<GoogleImage>());
         GridView gridView = (GridView) findViewById(R.id.glSearch);
@@ -84,14 +84,13 @@ public class MainActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            searchPrefs = (GoogleImageSearchTaskParams) data.getSerializableExtra("new_prefs");
-
+            searchPrefs = (GoogleImageSearchTaskParams) data.getParcelableExtra("new_prefs");
             new GoogleImageSearchTask(eventBus, this).execute(searchPrefs);
         }
     }
 
     @Subscribe
-    public void onEvent(List<GoogleImage> items)
+    public void onFetchImageEvent(List<GoogleImage> items)
     {
         adapter.clear();
         adapter.addAll(items);
@@ -116,8 +115,7 @@ public class MainActivity extends AppCompatActivity
         String query = editText.getText().toString();
         searchPrefs.setQuery(query);
 
-        Intent intent = new Intent();
-        intent.setClass(this, AdvancedSearchActivity.class);
+        Intent intent = new Intent(this, AdvancedSearchActivity.class);
         intent.putExtra("prefs", searchPrefs);
         startActivityForResult(intent, 0);
     }

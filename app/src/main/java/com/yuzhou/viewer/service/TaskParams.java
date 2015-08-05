@@ -7,6 +7,7 @@ import com.loopj.android.http.RequestParams;
  */
 public interface TaskParams
 {
+
     String getUrl();
     RequestParams getParams();
 
