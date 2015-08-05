@@ -26,9 +26,6 @@ public class AdvancedSearchActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_search);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         etSize = (SpinnerView) findViewById(R.id.etAdvSize);
         etSize.setItems(Lists.newArrayList(new String[]{"small", "medium", "large", "extra-large"}));
 
