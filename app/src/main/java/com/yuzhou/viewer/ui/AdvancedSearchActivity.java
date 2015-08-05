@@ -70,6 +70,7 @@ public class AdvancedSearchActivity extends AppCompatActivity
 
     public void onClickSave(View view)
     {
+        searchPrefs.clear();
         searchPrefs.setImgSize(etSize.getText().toString());
         searchPrefs.setImgColor(etColor.getText().toString());
         searchPrefs.setImgType(etType.getText().toString());

@@ -5,8 +5,9 @@
     <string name="hint_enter_image_search">Enter image search</string>
     <string name="search">Search</string>
 
-    <string name="error_unavailable_network">network is unavailable</string>
-    <string name="error_server_side">server side has something wrong</string>
+    <string name="error_unavailable_network">Network is unavailable</string>
+    <string name="error_server_side">Server side has something wrong</string>
+    <string name="error_data_not_found">Data were not found more</string>
 
     <string name="title_activity_advanced_search">AdvancedSearchActivity</string>
     <string name="title_advanced_search">Advanced search options</string>

@@ -35,6 +35,7 @@ public class GoogleApiParam implements ApiParam, Parcelable
     @Getter private final String url = "https://ajax.googleapis.com/ajax/services/search/images";
     @Getter private final String version = "1.0";
 
+    @Getter @Setter private int start = 0;
     @Getter @Setter private int quantity = 8;
     @Getter @Setter private String query;
     @Getter @Setter private String imgSize;
@@ -79,6 +80,7 @@ public class GoogleApiParam implements ApiParam, Parcelable
         RequestParams result = new RequestParams();
         result.put("v", version);
         result.put("rsz", quantity);
+        result.put("start", start);
         result.put("q", query);
         result.put("imgsz", revampImgSize(imgSize));
         result.put("imgcolor", imgColor);
@@ -94,6 +96,7 @@ public class GoogleApiParam implements ApiParam, Parcelable
         imgColor = null;
         imgType = null;
         siteFilter = null;
+        start = 0;
     }
 
     private String revampImgSize(String imgSize)

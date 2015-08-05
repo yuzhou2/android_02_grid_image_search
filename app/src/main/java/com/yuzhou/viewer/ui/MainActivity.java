@@ -22,6 +22,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static final int MAX_PAGE = 8;
+
     private ImageAdapter adapter;
     private EventBus eventBus;
     private GoogleApiParam searchPrefs;
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity
         adapter = new ImageAdapter(this, new ArrayList<GoogleImage>());
         GridView gridView = (GridView) findViewById(R.id.glSearch);
         gridView.setAdapter(adapter);
+        gridView.setOnScrollListener(new EndlessScrollListener(MAX_PAGE)
+        {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount)
+            {
+                queryImages(page);
+            }
+        });
 
         searchPrefs = new GoogleApiParam();
     }
@@ -85,6 +95,7 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK) {
             searchPrefs = (GoogleApiParam) data.getParcelableExtra("new_prefs");
+            adapter.clear();
             new GoogleApiTask(eventBus, this).execute(searchPrefs);
         }
     }
@@ -92,12 +103,11 @@ public class MainActivity extends AppCompatActivity
     @Subscribe
     public void onFetchImageEvent(List<GoogleImage> items)
     {
-        adapter.clear();
         adapter.addAll(items);
         adapter.notifyDataSetChanged();
     }
 
-    public void onClickSearch(View view)
+    public void onClickButtonSearch(View view)
     {
         EditText editText = (EditText) findViewById(R.id.etSearch);
         String query = editText.getText().toString();
@@ -118,6 +128,13 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, AdvancedSearchActivity.class);
         intent.putExtra("prefs", searchPrefs);
         startActivityForResult(intent, 0);
+    }
+
+    private void queryImages(int page)
+    {
+        int start = (page - 1) * searchPrefs.getQuantity();
+        searchPrefs.setStart(start);
+        new GoogleApiTask(eventBus, this).execute(searchPrefs);
     }
 
 }

@@ -13,6 +13,7 @@ import com.yuzhou.viewer.model.GoogleImage;
 import com.yuzhou.viewer.model.GoogleImageFactory;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class GoogleApiTask extends AsyncTask<ApiParam, Integer, List<GoogleImage
     private final List<GoogleImage> items = new ArrayList<>();
     private final EventBus eventBus;
     private final Context context;
-    private int errorMessage;
+    private int errorResource;
+    private String errorMessage;
 
     public GoogleApiTask(EventBus eventBus, Context context)
     {
@@ -37,13 +39,14 @@ public class GoogleApiTask extends AsyncTask<ApiParam, Integer, List<GoogleImage
 
     private List<GoogleImage> interExecute(ApiParam request)
     {
+        Log.d("VIEWER", request.toString());
         client.get(request.getUrl(), request.getParams(), new JsonHttpResponseHandler()
         {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response)
             {
                 Log.i("VIEWER", "status code=" + statusCode + ", response=" + response + ", error=" + throwable.getMessage());
-                errorMessage = R.string.error_unavailable_network;
+                errorResource = R.string.error_unavailable_network;
             }
 
             @Override
@@ -51,17 +54,35 @@ public class GoogleApiTask extends AsyncTask<ApiParam, Integer, List<GoogleImage
             {
                 if (response == null) {
                     Log.i("VIEWER", "Response no context");
-                    errorMessage = R.string.error_server_side;
+                    errorResource = R.string.error_server_side;
                     return;
                 }
-                List<GoogleImage> images = GoogleImageFactory.create(response);
-                if (images.isEmpty()) {
-                    Log.i("VIEWER", "Image not found");
-                    Log.d("VIEWER", "response=" + response.toString());
-                    errorMessage = R.string.error_server_side;
-                    return;
+
+                try {
+                    int httpCode = response.getInt("responseStatus");
+                    if (httpCode == 400) {
+                        errorResource = R.string.error_data_not_found;
+                        Log.d("VIEWER", "response=" + response.getString("responseDetails"));
+                        return;
+                    }
+                    if (httpCode != 200) {
+                        errorResource = R.string.error_server_side;
+                        Log.d("VIEWER", "response=" + response.getString("responseDetails"));
+                        return;
+                    }
+
+                    List<GoogleImage> images = GoogleImageFactory.create(response);
+                    if (images.isEmpty()) {
+                        Log.i("VIEWER", "Can not parse JSON");
+                        Log.d("VIEWER", "response=" + response.toString());
+                        errorResource = R.string.error_server_side;
+                        return;
+                    }
+                    items.addAll(images);
+                } catch (JSONException e) {
+                    Log.i("VIEWER", "Can not parse JSON");
+                    e.printStackTrace();
                 }
-                items.addAll(images);
             }
         });
         return items;
@@ -83,8 +104,8 @@ public class GoogleApiTask extends AsyncTask<ApiParam, Integer, List<GoogleImage
     @Override
     protected void onPostExecute(List<GoogleImage> googleImages)
     {
-        if (errorMessage > 0) {
-            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+        if (errorResource > 0) {
+            Toast.makeText(context, errorResource, Toast.LENGTH_LONG).show();
         }
         eventBus.post(items);
     }

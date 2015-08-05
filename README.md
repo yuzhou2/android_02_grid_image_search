@@ -2,7 +2,7 @@
 
 **Grid Image Search** is an android app that allows a user to search for images on web using simple filters. The app utilizes [Google Image Search API](https://developers.google.com/image-search/). Please note that API has been officially deprecated as of May 26, 2011.
 
-Time spent: **18** hours spent in total
+Time spent: **22** hours spent in total
 
 ## User Stories
 
@@ -17,7 +17,7 @@ The following **required** functionality is completed:
   * [X] Site (espn.com)
 * [X] Subsequent searches have any filters applied to the search results
 * [X] User can tap on any image in results to see the image **full-screen**
-* [ ] User can **scroll down to see more images**. The maximum number of images is 64 (limited by API).
+* [X] User can **scroll down to see more images**. The maximum number of images is 64 (limited by API).
 
 The following **optional** features are implemented:
 
