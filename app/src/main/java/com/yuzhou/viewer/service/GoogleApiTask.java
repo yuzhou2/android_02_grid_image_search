@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by yuzhou on 2015/08/02.
  */
-public class GoogleImageSearchTask extends AsyncTask<TaskParams, Integer, List<GoogleImage>>
+public class GoogleApiTask extends AsyncTask<ApiParam, Integer, List<GoogleImage>>
 {
     private final SyncHttpClient client = new SyncHttpClient();
     private final List<GoogleImage> items = new ArrayList<>();
@@ -29,13 +29,13 @@ public class GoogleImageSearchTask extends AsyncTask<TaskParams, Integer, List<G
     private final Context context;
     private int errorMessage;
 
-    public GoogleImageSearchTask(EventBus eventBus, Context context)
+    public GoogleApiTask(EventBus eventBus, Context context)
     {
         this.eventBus = eventBus;
         this.context = context;
     }
 
-    private List<GoogleImage> interExecute(TaskParams request)
+    private List<GoogleImage> interExecute(ApiParam request)
     {
         client.get(request.getUrl(), request.getParams(), new JsonHttpResponseHandler()
         {
@@ -68,9 +68,9 @@ public class GoogleImageSearchTask extends AsyncTask<TaskParams, Integer, List<G
     }
 
     @Override
-    protected List<GoogleImage> doInBackground(TaskParams... requests)
+    protected List<GoogleImage> doInBackground(ApiParam... requests)
     {
-        TaskParams request = requests[0];
+        ApiParam request = requests[0];
         return interExecute(request);
     }
 

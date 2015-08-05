@@ -14,8 +14,8 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.yuzhou.viewer.R;
 import com.yuzhou.viewer.model.GoogleImage;
-import com.yuzhou.viewer.service.GoogleImageSearchTask;
-import com.yuzhou.viewer.service.GoogleImageSearchTaskParams;
+import com.yuzhou.viewer.service.GoogleApiTask;
+import com.yuzhou.viewer.service.GoogleApiParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
 {
     private ImageAdapter adapter;
     private EventBus eventBus;
-    private GoogleImageSearchTaskParams searchPrefs;
+    private GoogleApiParam searchPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         GridView gridView = (GridView) findViewById(R.id.glSearch);
         gridView.setAdapter(adapter);
 
-        searchPrefs = new GoogleImageSearchTaskParams();
+        searchPrefs = new GoogleApiParam();
     }
 
     @Override
@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            searchPrefs = (GoogleImageSearchTaskParams) data.getParcelableExtra("new_prefs");
-            new GoogleImageSearchTask(eventBus, this).execute(searchPrefs);
+            searchPrefs = (GoogleApiParam) data.getParcelableExtra("new_prefs");
+            new GoogleApiTask(eventBus, this).execute(searchPrefs);
         }
     }
 
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
             searchPrefs.clear();
             searchPrefs.setQuery(query);
 
-            new GoogleImageSearchTask(eventBus, this).execute(searchPrefs);
+            new GoogleApiTask(eventBus, this).execute(searchPrefs);
         }
     }
 

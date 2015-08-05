@@ -10,13 +10,13 @@ import android.widget.EditText;
 
 import com.google.common.collect.Lists;
 import com.yuzhou.viewer.R;
-import com.yuzhou.viewer.service.GoogleImageSearchTaskParams;
+import com.yuzhou.viewer.service.GoogleApiParam;
 
 import java.util.List;
 
 public class AdvancedSearchActivity extends AppCompatActivity
 {
-    private GoogleImageSearchTaskParams searchPrefs;
+    private GoogleApiParam searchPrefs;
     private EditText etSize;
     private EditText etColor;
     private EditText etType;
@@ -33,20 +33,20 @@ public class AdvancedSearchActivity extends AppCompatActivity
 
         List<String> sizes = Lists.newArrayList(new String[]{"small", "medium", "large", "extra-large"});
         etSize = (EditText) findViewById(R.id.etAdvSize);
-        etSize.setOnClickListener(new OnClickListPopupTextViewListener(etSize, sizes));
+        etSize.setOnClickListener(new OnClickListPopupEditTextListener(etSize, sizes));
 
         List<String> colors = Lists.newArrayList(new String[]{"black", "blue", "brown", "gray", "green"});
         etColor = (EditText) findViewById(R.id.etAdvColor);
-        etColor.setOnClickListener(new OnClickListPopupTextViewListener(etColor, colors));
+        etColor.setOnClickListener(new OnClickListPopupEditTextListener(etColor, colors));
 
         List<String> types = Lists.newArrayList(new String[]{"face", "photo", "clip art", "line art"});
         etType = (EditText) findViewById(R.id.etAdvType);
-        etType.setOnClickListener(new OnClickListPopupTextViewListener(etType, types));
+        etType.setOnClickListener(new OnClickListPopupEditTextListener(etType, types));
 
         etSite = (EditText) findViewById(R.id.etAdvSite);
 
 
-        searchPrefs = (GoogleImageSearchTaskParams) getIntent().getParcelableExtra("prefs");
+        searchPrefs = (GoogleApiParam) getIntent().getParcelableExtra("prefs");
         etSize.setText(searchPrefs.getImgSize());
         etColor.setText(searchPrefs.getImgColor());
         etType.setText(searchPrefs.getImgType());

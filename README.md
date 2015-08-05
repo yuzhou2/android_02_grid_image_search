@@ -2,7 +2,7 @@
 
 **Grid Image Search** is an android app that allows a user to search for images on web using simple filters. The app utilizes [Google Image Search API](https://developers.google.com/image-search/). Please note that API has been officially deprecated as of May 26, 2011.
 
-Time spent: **11** hours spent in total
+Time spent: **18** hours spent in total
 
 ## User Stories
 

@@ -15,20 +15,20 @@ import lombok.ToString;
  */
 @EqualsAndHashCode
 @ToString
-public class GoogleImageSearchTaskParams implements TaskParams, Parcelable
+public class GoogleApiParam implements ApiParam, Parcelable
 {
 
     public static final Parcelable.Creator CREATOR = new Creator()
     {
-        public GoogleImageSearchTaskParams createFromParcel(Parcel in)
+        public GoogleApiParam createFromParcel(Parcel in)
         {
-            return new GoogleImageSearchTaskParams(in);
+            return new GoogleApiParam(in);
         }
 
         @Override
         public Object[] newArray(int size)
         {
-            return new GoogleImageSearchTaskParams[size];
+            return new GoogleApiParam[size];
         }
     };
 
@@ -42,11 +42,11 @@ public class GoogleImageSearchTaskParams implements TaskParams, Parcelable
     @Getter @Setter private String imgType;
     @Getter @Setter private String siteFilter;
 
-    public GoogleImageSearchTaskParams()
+    public GoogleApiParam()
     {
     }
 
-    private GoogleImageSearchTaskParams(Parcel in)
+    private GoogleApiParam(Parcel in)
     {
         quantity = in.readInt();
         query = in.readString();

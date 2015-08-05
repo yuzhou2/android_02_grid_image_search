@@ -12,12 +12,12 @@ import java.util.List;
 /**
  * Created by yuzhou on 2015/08/04.
  */
-public class OnClickListPopupTextViewListener implements View.OnClickListener
+public class OnClickListPopupEditTextListener implements View.OnClickListener
 {
     private final EditText editText;
     private final List<String> items;
 
-    public OnClickListPopupTextViewListener(EditText editText, List<String> items)
+    public OnClickListPopupEditTextListener(EditText editText, List<String> items)
     {
         this.editText = editText;
         this.items = new ArrayList<>();
