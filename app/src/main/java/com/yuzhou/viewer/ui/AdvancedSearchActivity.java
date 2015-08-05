@@ -12,14 +12,12 @@ import com.google.common.collect.Lists;
 import com.yuzhou.viewer.R;
 import com.yuzhou.viewer.service.GoogleApiParam;
 
-import java.util.List;
-
 public class AdvancedSearchActivity extends AppCompatActivity
 {
     private GoogleApiParam searchPrefs;
-    private EditText etSize;
-    private EditText etColor;
-    private EditText etType;
+    private SpinnerView etSize;
+    private SpinnerView etColor;
+    private SpinnerView etType;
     private EditText etSite;
 
     @Override
@@ -31,17 +29,14 @@ public class AdvancedSearchActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        List<String> sizes = Lists.newArrayList(new String[]{"small", "medium", "large", "extra-large"});
-        etSize = (EditText) findViewById(R.id.etAdvSize);
-        etSize.setOnClickListener(new OnClickListPopupEditTextListener(etSize, sizes));
+        etSize = (SpinnerView) findViewById(R.id.etAdvSize);
+        etSize.setItems(Lists.newArrayList(new String[]{"small", "medium", "large", "extra-large"}));
 
-        List<String> colors = Lists.newArrayList(new String[]{"black", "blue", "brown", "gray", "green"});
-        etColor = (EditText) findViewById(R.id.etAdvColor);
-        etColor.setOnClickListener(new OnClickListPopupEditTextListener(etColor, colors));
+        etColor = (SpinnerView) findViewById(R.id.etAdvColor);
+        etColor.setItems(Lists.newArrayList(new String[]{"black", "blue", "brown", "gray", "green"}));
 
-        List<String> types = Lists.newArrayList(new String[]{"face", "photo", "clip art", "line art"});
-        etType = (EditText) findViewById(R.id.etAdvType);
-        etType.setOnClickListener(new OnClickListPopupEditTextListener(etType, types));
+        etType = (SpinnerView) findViewById(R.id.etAdvType);
+        etType.setItems(Lists.newArrayList(new String[]{"face", "photo", "clip art", "line art"}));
 
         etSite = (EditText) findViewById(R.id.etAdvSite);
 
@@ -70,7 +65,6 @@ public class AdvancedSearchActivity extends AppCompatActivity
 
     public void onClickSave(View view)
     {
-        searchPrefs.clear();
         searchPrefs.setImgSize(etSize.getText().toString());
         searchPrefs.setImgColor(etColor.getText().toString());
         searchPrefs.setImgType(etType.getText().toString());

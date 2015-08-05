@@ -24,7 +24,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:width="120dp"
-        android:onClick="onClickButtonSearch"
+        android:onClick="onClickSearchButton"
         android:text="@string/search"/>
 
     <GridView

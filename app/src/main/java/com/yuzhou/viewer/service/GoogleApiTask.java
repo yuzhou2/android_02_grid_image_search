@@ -29,7 +29,6 @@ public class GoogleApiTask extends AsyncTask<ApiParam, Integer, List<GoogleImage
     private final EventBus eventBus;
     private final Context context;
     private int errorResource;
-    private String errorMessage;
 
     public GoogleApiTask(EventBus eventBus, Context context)
     {

@@ -30,15 +30,13 @@
         android:textIsSelectable="false"
         android:textSize="20sp"/>
 
-    <EditText
+    <com.yuzhou.viewer.ui.SpinnerView
         android:id="@+id/etAdvSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tvAdvSize"
         android:layout_alignEnd="@+id/tvAdvTitle"
         android:layout_toEndOf="@+id/tvAdvSize"
-        android:focusable="false"
-        android:focusableInTouchMode="true"
         android:gravity="right"/>
 
     <TextView
@@ -52,15 +50,13 @@
         android:textIsSelectable="false"
         android:textSize="20sp"/>
 
-    <EditText
+    <com.yuzhou.viewer.ui.SpinnerView
         android:id="@+id/etAdvColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tvAdvColor"
         android:layout_alignEnd="@+id/etAdvSize"
         android:layout_toEndOf="@+id/tvAdvColor"
-        android:focusable="false"
-        android:focusableInTouchMode="true"
         android:gravity="right"/>
 
     <TextView
@@ -74,15 +70,13 @@
         android:textIsSelectable="false"
         android:textSize="20sp"/>
 
-    <EditText
+    <com.yuzhou.viewer.ui.SpinnerView
         android:id="@+id/etAdvType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tvAdvType"
         android:layout_alignEnd="@+id/etAdvColor"
         android:layout_toEndOf="@+id/tvAdvType"
-        android:focusable="false"
-        android:focusableInTouchMode="true"
         android:gravity="right"/>
 
     <TextView
