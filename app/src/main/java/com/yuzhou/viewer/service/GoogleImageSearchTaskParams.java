@@ -20,7 +20,7 @@ public class GoogleImageSearchTaskParams implements TaskParams, Serializable
 
     private String version = "1.0";
 
-    @Getter @Setter private int qunatity = 8;
+    @Getter @Setter private int quantity = 8;
     @Getter @Setter private String query;
     @Getter @Setter private String imgSize;
     @Getter @Setter private String imgColor;
@@ -32,7 +32,7 @@ public class GoogleImageSearchTaskParams implements TaskParams, Serializable
     {
         RequestParams result = new RequestParams();
         result.put("v", version);
-        result.put("rsz", qunatity);
+        result.put("rsz", quantity);
         result.put("q", query);
         result.put("imgsz", revampImgSize(imgSize));
         result.put("imgcolor", imgColor);

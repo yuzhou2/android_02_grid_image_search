@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name=".ui.AdvancedSearchActivity"
-            android:label="@string/title_activity_advanced_search" >
+            android:label="@string/title_activity_advanced_search"
+            android:parentActivityName=".ui.MainActivity">
         </activity>
     </application>
 

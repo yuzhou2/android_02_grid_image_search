@@ -1,22 +1,13 @@
 package com.yuzhou.viewer.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListPopupWindow;
-import android.widget.TextView;
 
 import com.google.common.collect.Lists;
 import com.yuzhou.viewer.R;
@@ -37,6 +28,9 @@ public class AdvancedSearchActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_search);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         List<String> sizes = Lists.newArrayList(new String[]{"small", "medium", "large", "extra-large"});
         etSize = (EditText) findViewById(R.id.etAdvSize);
