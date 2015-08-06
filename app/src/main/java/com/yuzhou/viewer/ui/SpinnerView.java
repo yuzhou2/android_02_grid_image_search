@@ -3,6 +3,7 @@ package com.yuzhou.viewer.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -31,6 +32,9 @@ public class SpinnerView extends EditText
         @Override
         public void onClick(View v)
         {
+            InputMethodManager imm = (InputMethodManager) spinnerView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(spinnerView.getWindowToken(), 0);
+
             final ListPopupWindow lpw = new ListPopupWindow(spinnerView.getContext());
             lpw.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {

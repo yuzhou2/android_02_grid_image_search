@@ -1,5 +1,6 @@
 package com.yuzhou.viewer.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 
@@ -14,8 +16,8 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.yuzhou.viewer.R;
 import com.yuzhou.viewer.model.GoogleImage;
-import com.yuzhou.viewer.service.GoogleApiTask;
 import com.yuzhou.viewer.service.GoogleApiParam;
+import com.yuzhou.viewer.service.GoogleApiTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +120,9 @@ public class MainActivity extends AppCompatActivity
 
             new GoogleApiTask(eventBus, this).execute(searchPrefs);
         }
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(findViewById(R.id.bnSearch).getWindowToken(), 0);
     }
 
     public void onAdvancedSearch(MenuItem item)
