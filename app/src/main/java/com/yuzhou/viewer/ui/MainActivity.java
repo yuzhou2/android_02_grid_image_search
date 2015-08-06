@@ -2,6 +2,8 @@ package com.yuzhou.viewer.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -95,9 +98,16 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 0 && resultCode == RESULT_OK) {
             searchPrefs = (GoogleApiParam) data.getParcelableExtra("new_prefs");
             adapter.clear();
+
+            if (!isNetworkAvailable()) {
+                Toast.makeText(this, R.string.error_unavailable_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
             new GoogleApiTask(eventBus, this).execute(searchPrefs);
         }
     }
@@ -111,6 +121,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickSearchButton(View view)
     {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(findViewById(R.id.bnSearch).getWindowToken(), 0);
+
+        if (!isNetworkAvailable()) {
+            Toast.makeText(this, R.string.error_unavailable_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         adapter.clear();
         EditText editText = (EditText) findViewById(R.id.etSearch);
         String query = editText.getText().toString();
@@ -120,9 +138,6 @@ public class MainActivity extends AppCompatActivity
 
             new GoogleApiTask(eventBus, this).execute(searchPrefs);
         }
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(findViewById(R.id.bnSearch).getWindowToken(), 0);
     }
 
     public void onAdvancedSearch(MenuItem item)
@@ -141,6 +156,14 @@ public class MainActivity extends AppCompatActivity
         int start = (page - 1) * searchPrefs.getQuantity();
         searchPrefs.setStart(start);
         new GoogleApiTask(eventBus, this).execute(searchPrefs);
+    }
+
+    private boolean isNetworkAvailable()
+    {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
 }
