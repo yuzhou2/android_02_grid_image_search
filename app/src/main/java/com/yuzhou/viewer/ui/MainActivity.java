@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 {
     private static final int MAX_PAGE = 8;
 
+    private EditText etSearch;
     private ImageAdapter adapter;
     private EventBus eventBus;
     private GoogleApiParam searchPrefs;
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity
 
         eventBus = new EventBus();
         eventBus.register(this);
+
+        etSearch = (EditText) findViewById(R.id.etSearch);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setLogo(R.drawable.ic_laucher);
@@ -67,6 +72,35 @@ public class MainActivity extends AppCompatActivity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView miSearch = (SearchView) MenuItemCompat.getActionView(searchItem);
+        miSearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus)
+            {
+                String query = etSearch.getText().toString();
+                miSearch.setQuery(query, false);
+            }
+        });
+        miSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String query)
+            {
+                etSearch.setText(query);
+                onClickSearchButton(miSearch);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                // click back also evoke
+                return false;
+            }
+        });
         return true;
     }
 
@@ -121,6 +155,8 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickSearchButton(View view)
     {
+        String query = etSearch.getText().toString();
+
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(findViewById(R.id.bnSearch).getWindowToken(), 0);
 
@@ -130,8 +166,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         adapter.clear();
-        EditText editText = (EditText) findViewById(R.id.etSearch);
-        String query = editText.getText().toString();
         if (!query.isEmpty()) {
             searchPrefs.clear();
             searchPrefs.setQuery(query);
